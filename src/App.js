@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import queryString from 'query-string';
 
 
 let defaultStyle = {
@@ -87,9 +88,26 @@ class Album extends Component {
 }
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      serverData: {},
+    }
+  }
+  componentDidMount() {
+    let parsed = queryString.parse(window.location.search)
+    let accessToken = parsed.access_token
+
+    fetch('https://api.spotify.com/v1/me', {
+      headers: { 'Authorization': 'Bearer ' + accessToken }
+    }).then(response => response.json())
+      .then(data => console.log(data))
+  }
+  
   render() {
     return (
       <div>
+
         <h1>Title</h1>
         <Aggregate />
         <Aggregate />
