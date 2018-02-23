@@ -31,8 +31,6 @@ class Filter extends Component {
 
 
 class Scrollable extends Component {
-
-
   render() {
     return (
       <div id="scrollable">
@@ -75,6 +73,7 @@ class Scrollable extends Component {
   }
 }
 
+
 class Album extends Component {
   render() {
     return (
@@ -91,7 +90,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      serverData: {},
+      serverData: { email: null },
     }
   }
   componentDidMount() {
@@ -101,20 +100,21 @@ class App extends Component {
     fetch('https://api.spotify.com/v1/me', {
       headers: { 'Authorization': 'Bearer ' + accessToken }
     }).then(response => response.json())
-      .then(data => console.log(data))
-  }
-  
-  render() {
-    return (
-      <div>
+      .then(data => this.setState({ serverData: { email: data.email } }))
 
-        <h1>Title</h1>
+  }
+
+  render() {
+    let email = this.state.serverData.email 
+    return (
+      < div >
+        <h1>{email}</h1>
         <Aggregate />
         <Aggregate />
         <Filter />
         <Scrollable />
         <Album />
-      </div>
+      </div >
     );
   }
 }
