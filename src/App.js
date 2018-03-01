@@ -100,7 +100,7 @@ class App extends Component {
     fetch('https://api.spotify.com/v1/me', {
       headers: { 'Authorization': 'Bearer ' + accessToken }
     }).then(response => response.json())
-      .then(data => this.setState({ serverData: { email: data.email } }))
+    /*   .then(data => this.setState({ serverData: { email: data.email } })) */
 
   }
 
