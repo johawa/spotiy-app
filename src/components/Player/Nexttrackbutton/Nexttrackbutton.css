@@ -1,0 +1,22 @@
+.Nextbutton {
+    margin-right: 10px;
+    padding: 4px;
+    background: aliceblue;
+    border: 2px solid #72D687;
+    border-radius: 100%;
+    outline: none;
+}
+
+.isEnabled {
+    cursor: pointer;
+}
+
+.Icon {
+    display: block;
+    width: 30px;
+    height: 30px;
+}
+
+.IconShape {
+    fill: #72D687;    
+}

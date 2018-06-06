@@ -1,0 +1,26 @@
+.Toolbar {   
+    background-color: rgb(70, 69, 69);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+    z-index: 90;
+}
+
+.Toolbar nav {
+    height: 100%;
+}
+
+.Search {
+    height: 100%;
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 499px) {
+    .DesktopOnly {
+        display: none;
+    }
+}
