@@ -10,7 +10,7 @@
 }
 
 .Coverflow {
-  perspective: 20vw;
+  perspective: 25vw;
   font-size: 16vh;
   overflow: hidden;
   
@@ -53,9 +53,9 @@
   justify-content: center;
   transform: rotateY(-20deg); 
   margin-top: 0px;
-  margin: 5px;
-  height: 25vw;
-  width: 25vw;  
+  margin: 10px;
+  height: 22.5vw;
+  width: 22.5vw;  
  
 
   backface-visibility: hidden;

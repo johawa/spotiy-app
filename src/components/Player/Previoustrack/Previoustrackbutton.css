@@ -1,9 +1,9 @@
 .PrevButton {
     margin-right: 10px;
-    padding: 4px;
-    background: aliceblue;
-    border: 2px solid #72D687;
-    border-radius: 100%;
+    
+    background: #fff;
+    border:none;
+   
     outline: none;
 }
 
@@ -13,10 +13,10 @@
 
 .Icon {
     display: block;
-    width: 30px;
-    height: 30px;
+    width: 3.5rem;
+    height: 3.5rem;
 }
 
 .IconShape {
-    fill: #72D687;    
+    fill: #00000070;    
 }

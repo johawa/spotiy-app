@@ -1,8 +1,16 @@
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+
+
 body {
   margin: 0;
   padding: 0;
 
-  background: rgb(51, 51, 51);
+  background: #1A1A1A;
   background-size: cover;
   background-repeat: no-repeat;
 

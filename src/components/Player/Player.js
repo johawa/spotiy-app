@@ -17,7 +17,7 @@ class PlayerComponent extends Component {
         player.nextTrack().then(() => {
             console.log('Skipped to next track!');
         });
-    
+
     }
     previoussong = () => {
         player.previousTrack().then(() => {
@@ -25,7 +25,7 @@ class PlayerComponent extends Component {
         });
     }
 
-    
+
 
 
     render() {
@@ -38,12 +38,22 @@ class PlayerComponent extends Component {
 
         return (
 
-            <div className={classes.Player}>                     
-                <Previoustrackbutton previoussong={() => this.previoussong()} />
-                <Playbutton />
-                <Nextrackbutton nextsong={() => this.nextsong()} />                
-                <Volumehandler />
-                {progressbar}
+            <div className={classes.Player}>
+
+                <div className={classes.Playercontrol}>
+                    <Previoustrackbutton previoussong={() => this.previoussong()} />
+                    <Playbutton />
+                    <Nextrackbutton nextsong={() => this.nextsong()} />
+                </div>
+
+                <div className={classes.Progressbarcontainer}>
+                    {progressbar}
+                </div>
+
+                <div className={classes.Volumecontainer}>
+                    <Volumehandler />
+                </div>
+
             </div>
         );
     }

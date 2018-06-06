@@ -1,9 +1,9 @@
 .PlayButton{
   margin-right: 10px;
-  padding: 8px;
-  background: aliceblue;
+ 
+  background: #fff;
   border: 2px solid #72D687;
-  border-radius: 100%;
+ 
   outline: none;
 }
 
@@ -14,10 +14,10 @@
 
 .Icon {
   display: block;
-  width: 30px;
-  height: 30px;
+  width: 3.5rem;
+  height: 3.5rem;
 }
 
 .IconShape {
-  fill: #72D687; 
+  fill: #72D687;    
 }

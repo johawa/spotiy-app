@@ -1,10 +1,10 @@
 .Toolbar {   
-    background-color: rgb(70, 69, 69);
+    background-color: #00000070;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    padding: 0 20px;
-    box-sizing: border-box;
+    
+   
     z-index: 90;
 }
 
@@ -12,12 +12,7 @@
     height: 100%;
 }
 
-.Search {
-    height: 100%;
-    display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+
 
 @media (max-width: 499px) {
     .DesktopOnly {

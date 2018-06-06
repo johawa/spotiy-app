@@ -9,8 +9,8 @@
  /* border: 2px solid red;
  background-color: black; */
  display: flex;
- height: 25vw;
- width: 25vw;  
+ height: 22.5vw;
+ width: 22.5vw;  
 
     backface-visibility: hidden;
     position: absolute;

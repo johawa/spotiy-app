@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 
 import classes from './Search.css';
 import axios from '../../axios-query';
+import Aux from '../../hoc/Auxilary';
 import * as actionTypes from '../../Store/actions';
+import Spyglas from '../../assets/spyglass.png';
 
 class Search extends Component {
     state = {
@@ -62,16 +64,18 @@ class Search extends Component {
 
     render() {
         let form = (
-            <form onSubmit={this.searchAlbums}>               
-                <input className={classes.Text} type="text" placeholder="Suche nach einem Album" onChange={this.handleChange} />
-                <input type="submit" value="Search" />
+            <form className={classes.Search} onSubmit={this.searchAlbums}>               
+                <input className={classes.Input} type="text" placeholder="Suche nach einem Album" onChange={this.handleChange} />
+                <button className={classes.Button} type="submit">
+                    <img src={Spyglas}/>
+                </button>
             </form>
         );
 
         return (
-            <div className={classes.Search}>
+            <Aux>
                 {form}               
-            </div>
+            </Aux>
         );
     }
 }

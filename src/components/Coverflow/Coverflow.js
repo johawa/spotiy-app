@@ -89,7 +89,7 @@ class Coverflow extends Component {
         items.addEventListener('dblclick',
 
             scrollMiddleWare(.89)((scroll, abs) => {
-            //(event) => {
+                //(event) => {
                 //let target = event.path[2];
                 //console.log(target.getBoundingClientRect()., 'clicked')
                 //abs.x = -400;
@@ -99,7 +99,7 @@ class Coverflow extends Component {
 
                 //abs = items.style.left;
                 //console.log('abs: ', abs);
-                
+
             }));
 
 
@@ -285,10 +285,10 @@ class Coverflow extends Component {
         return (
             <div className={classes.CoverflowContainer} >
 
-                {/*    <Modal show={true}>
+               {/*  <Modal show={true}>
                     {this.props.tracklistProp}
-                </Modal> */}
-
+                </Modal>
+ */}
 
                 <div className={classes.Coverflow} id="Coverflow">
                     <ul className={classes.Ul} id="items">

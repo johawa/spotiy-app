@@ -32,7 +32,7 @@ class Volumehandler extends Component {
 
         return (
             <div>
-                <label> {label} {this.props.user_volume} </label>
+                <label> {label}  </label>
                 <input
                    
                     type="range"
