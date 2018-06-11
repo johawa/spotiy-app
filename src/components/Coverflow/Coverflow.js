@@ -15,7 +15,9 @@ class Coverflow extends Component {
     state = {
         clicked: false,
         smaller: false,
-        clickedBackId: null
+        clickedBackId: null,
+        front: null,
+        back: null
     }
 
     componentDidMount() {
@@ -135,45 +137,32 @@ class Coverflow extends Component {
                 MiddleItem.map(MiddleItem => {
                     //MIDDLE rotatey(0deg)//                  
                     MiddleItem.style.zIndex = '100';
-                    if (!MiddleItem.classList.contains(classes.Clicked)) {
 
-                        MiddleItem.classList.remove(classes.Right);
-                        MiddleItem.classList.remove(classes.Left);
-                        MiddleItem.classList.add(classes.Middle); //ADD MIDDLE CLASS
-                        //MiddleItem.classList.remove(classes.Middle)
-                        //MiddleItem.classList.remove(classes.Middle);
-                    }
-
-                    else if (MiddleItem.classList.contains(classes.Clicked)) {
-                        MiddleItem.classList.remove(classes.Middle)
-                        MiddleItem.classList.remove(classes.Right);
-                        MiddleItem.classList.remove(classes.Left);
-
-                    }
+                    MiddleItem.classList.remove(classes.Right);
+                    MiddleItem.classList.remove(classes.Left);
+                    MiddleItem.classList.add(classes.Middle); //ADD MIDDLE CLASS
 
                 });
 
                 leftItems.map((Leftitem, index) => {
                     //LEFT rotatey(20deg)//
 
-
                     const Zindex = 50 + ((index + 2) * 1);
 
                     Leftitem.style.zIndex = `${Zindex}`;
-                    if (Leftitem.classList.contains(classes.Clicked)) {
 
-                        Leftitem.classList.remove(classes.Left);
-                        Leftitem.classList.remove(classes.Middle);
-                        Leftitem.classList.remove(classes.Right);
+                    Leftitem.classList.remove(classes.Middle);
+                    Leftitem.classList.remove(classes.Right);
+                    Leftitem.classList.add(classes.Left); //ADD LEFT CLASS                   
+
+                    if (Leftitem.children[0].classList.contains(classes.ClickedFront) &&
+                    Leftitem.children[1].classList.contains(classes.ClickedBack)) {
+                        console.log('left and turned')
+                        Leftitem.children[0].classList.remove(classes.ClickedFront)
+                        Leftitem.children[1].classList.remove(classes.ClickedBack)
+                        return
                     }
 
-                    else if (!Leftitem.classList.contains(classes.Clicked)) {
-
-                        Leftitem.classList.remove(classes.Clicked);
-                        Leftitem.classList.remove(classes.Middle);
-                        Leftitem.classList.remove(classes.Right);
-                        Leftitem.classList.add(classes.Left); //ADD LEFT CLASS
-                    }
 
                 });
 
@@ -182,22 +171,27 @@ class Coverflow extends Component {
                     //RIGHT rotateY(-20deg)//
 
                     const Zindex = 50 - ((index + 2) * 1);
-                    Rightitem.style.zIndex = `${Zindex}`;
-                    if (Rightitem.classList.contains(classes.Clicked)) {
-                        Rightitem.classList.remove(classes.Clicked);
-                        Rightitem.classList.remove(classes.Right);
-                        Rightitem.classList.remove(classes.Middle);
-                        Rightitem.classList.remove(classes.Left);
-                    }
 
-                    else if (!Rightitem.classList.contains(classes.Clicked)) {
-                        Rightitem.classList.remove(classes.Clicked);
-                        Rightitem.classList.remove(classes.Middle);
-                        Rightitem.classList.remove(classes.Left);
-                        Rightitem.classList.add(classes.Right); //ADD RIGHT CLASS
+                    Rightitem.style.zIndex = `${Zindex}`;
+
+
+                    Rightitem.classList.remove(classes.Middle);
+                    Rightitem.classList.remove(classes.Left);
+                    Rightitem.classList.add(classes.Right); //ADD RIGHT CLASS
+
+                    if (Rightitem.children[0].classList.contains(classes.ClickedFront) &&
+                        Rightitem.children[1].classList.contains(classes.ClickedBack)) {
+                        console.log('right and turned')
+                        Rightitem.children[0].classList.remove(classes.ClickedFront)
+                        Rightitem.children[1].classList.remove(classes.ClickedBack)
+                        return
                     }
 
                 });
+
+
+
+
 
             }));
 
@@ -214,9 +208,9 @@ class Coverflow extends Component {
         const target = e.currentTarget;
         const backOfTarget = target.nextSibling;
         const parent = target.parentNode;
-        //console.log(this.refs)
 
         if (parent.classList.contains(classes.Middle)) {
+
 
             target.classList.add(classes.ClickedFront);
             backOfTarget.classList.add(classes.ClickedBack);
@@ -240,7 +234,8 @@ class Coverflow extends Component {
 
                 .then(tracklist => this.props.selectedTracklist(tracklist))
 
-            this.setState({ clicked: true, clickedBackId: id })
+            this.setState({ clicked: true, clickedBackId: id, front: target.classList, back: backOfTarget.classList })
+            setTimeout(() => console.log(this.state), 1000)
 
         }
         else {
@@ -252,6 +247,8 @@ class Coverflow extends Component {
 
             console.log(result.map((item, i) => item[0].classList.contains([classes.ClickedFront])));
         }
+
+        console.log(this.refs[`listItem_${id}`])
     }
 
 
@@ -264,23 +261,24 @@ class Coverflow extends Component {
                 const id = this.props.ids[index].id
 
                 return (
-
                     <Aux key={index}>
 
                         <li
+                            ref={`listItem_${id}`}
                             className={classes.Flipper}
                             style={{ 'zIndex': (50 - ((index + 2) * 1)) }}
                         >
 
-
-                            <div ref={`front${id}`} className={classes.Front} onClick={(e) => { this.getID(e, id) }}>
+                            <div
+                                className={classes.Front}
+                                onClick={(e) => { this.getID(e, id) }}>
                                 <img className={classes.Image} src={image} alt="" />
                                 <p className={classes.Description}
                                     style={{ 'zIndex': 101 + (index * -1) }}>
                                     {this.props.ids[index].name}
                                 </p>
+
                             </div>
-                            
 
                             <Back>
                                 {id === this.state.clickedBackId ? this.props.tracklistProp : null}
@@ -295,20 +293,10 @@ class Coverflow extends Component {
         return (
 
             <Aux>
-                {/*    <Modal show={this.state.clicked}>
-                    {this.props.tracklistProp}
-                </Modal>
-  */}
-
-
-
-
 
                 <div className={classes.Coverflow} id="Coverflow">
                     <ul className={classes.Ul} id="items">
-
                         {listElements}
-
                     </ul>
                 </div>
 

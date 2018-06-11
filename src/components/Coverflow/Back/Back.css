@@ -6,7 +6,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   display: flex;
-  transform: rotateY(-180deg);
+  transform: rotateY(180deg);
 
   height: 20vw;
   width: 20vw;
