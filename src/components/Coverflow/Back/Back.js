@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import classes from './Back.css';
 
 class Back extends Component {
-    render() {
+
+
+    render() {          
         return (
-            <div className={classes.Back} onClick={() => console.log('clicked on back')}>
-                {this.props.children}
-               
+            <div className={classes.Back}  onClick={this.props.clicked} >
+                {this.props.children}              
             </div>
         );
     }

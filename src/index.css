@@ -10,7 +10,8 @@ body {
   margin: 0;
   padding: 0;
 
-  background: #1A1A1A;
+  background: rgb(35,37,38);
+background: linear-gradient(77deg, rgba(35,37,38,1) 0%, rgba(54,56,57,1) 50%, rgba(35,37,38,1) 100%);
   background-size: cover;
   background-repeat: no-repeat;
 
@@ -26,4 +27,25 @@ html {
   box-sizing: border-box;
   font-size: 62.5%; 
 
+}
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #000000; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
 }

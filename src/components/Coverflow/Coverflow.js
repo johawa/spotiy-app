@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ReactDOM from 'react-dom';
 
 import classes from './Coverflow.css';
 import axios from '../../axios-query';
@@ -9,10 +10,12 @@ import * as actionTypes from '../../Store/actions';
 import backdrop from '../UI/Backdrop/Backdrop';
 import Modal from '../UI/Modal/Modal';
 
+
 class Coverflow extends Component {
     state = {
         clicked: false,
-        smaller: false
+        smaller: false,
+        clickedBackId: null
     }
 
     componentDidMount() {
@@ -93,7 +96,7 @@ class Coverflow extends Component {
                 //let target = event.path[2];
                 //console.log(target.getBoundingClientRect()., 'clicked')
                 //abs.x = -400;
-                items.scrollLeft -= 400;
+
                 //abs.x = -400;
                 console.log('blabla', abs)
 
@@ -103,20 +106,22 @@ class Coverflow extends Component {
             }));
 
 
-
-
         scrollable.addEventListener('mousemove',
+
+
             scrollMiddleWare(.89)((scroll) => {
+
+
+
                 //console.log(scroll)
                 items.style.left = `${scroll.abs.x}px`;
 
-
                 // CALC WINDOW PROS
                 let WindowMiddle = window.innerWidth * 0.5;
-                let itemWidth = itemsArr[0].offsetWidth;
-                let startRight = WindowMiddle + itemWidth * 0.05
-                let endLeft = WindowMiddle - itemWidth
-                let offset = itemWidth * 0.20 //DELETE AFTER FLIPPER FIX
+                let itemWidth = ~~itemsArr[0].offsetWidth;
+                let startRight = ~~WindowMiddle + itemWidth * 0.05
+                let endLeft = ~~WindowMiddle - itemWidth
+                let offset = ~~itemWidth * 0.20 //DELETE AFTER FLIPPER FIX
 
                 //FILTER ELEMENTS TO LEFT RIGHT AND MIDDLE
                 let MiddleItem = itemsArr.filter(items => {
@@ -151,17 +156,19 @@ class Coverflow extends Component {
                 leftItems.map((Leftitem, index) => {
                     //LEFT rotatey(20deg)//
 
+
                     const Zindex = 50 + ((index + 2) * 1);
 
                     Leftitem.style.zIndex = `${Zindex}`;
                     if (Leftitem.classList.contains(classes.Clicked)) {
-                        Leftitem.classList.remove(classes.Clicked);
+
                         Leftitem.classList.remove(classes.Left);
                         Leftitem.classList.remove(classes.Middle);
                         Leftitem.classList.remove(classes.Right);
                     }
 
                     else if (!Leftitem.classList.contains(classes.Clicked)) {
+
                         Leftitem.classList.remove(classes.Clicked);
                         Leftitem.classList.remove(classes.Middle);
                         Leftitem.classList.remove(classes.Right);
@@ -198,49 +205,57 @@ class Coverflow extends Component {
 
     }
 
-
-
     getID = (e, id) => {
+        //console.log(ReactDOM.findDOMNode(this).offsetWidth)
+        //console.log(ReactDOM.findDOMNode(e.currentTarget))
+        //console.log(this.refs[`front_${id}`].classList)
 
-        this.props.selectedCoverID(id);
 
-        axios.get('albums/' + id + '/tracks')
-            .then(data => {
-                //console.log(data);
-                return Promise.all(data.data.items.map(function (item) {
-
-                    return [{
-                        number: item.track_number,
-                        name: item.name,
-                        duration: item.duration_ms,
-                        uri: item.uri,
-                        id: item.id
-                    }]
-                }))
-            })
-
-            .then(tracklist => this.props.selectedTracklist(tracklist))
-        //.then(() => console.log(this.state))
-
-    }
-
-    test = (e) => {
         const target = e.currentTarget;
+        const backOfTarget = target.nextSibling;
+        const parent = target.parentNode;
+        //console.log(this.refs)
 
-        if (target.classList.contains(classes.Middle)) {
+        if (parent.classList.contains(classes.Middle)) {
 
-            target.classList.add(classes.Clicked);
+            target.classList.add(classes.ClickedFront);
+            backOfTarget.classList.add(classes.ClickedBack);
+
+            this.props.selectedCoverID(id);
+
+            axios.get('albums/' + id + '/tracks')
+                .then(data => {
+                    //console.log(data);
+                    return Promise.all(data.data.items.map(function (item) {
+
+                        return [{
+                            number: item.track_number,
+                            name: item.name,
+                            duration: item.duration_ms,
+                            uri: item.uri,
+                            id: item.id
+                        }]
+                    }))
+                })
+
+                .then(tracklist => this.props.selectedTracklist(tracklist))
+
+            this.setState({ clicked: true, clickedBackId: id })
 
         }
         else {
             console.log('element not in middle')
+            let obj = this.refs
+            var result = Object.keys(obj).map(function (key) {
+                return [obj[key]];
+            });
+
+            console.log(result.map((item, i) => item[0].classList.contains([classes.ClickedFront])));
         }
     }
 
 
     render() {
-
-
 
         let listElements = <div> no albums </div>
 
@@ -251,30 +266,25 @@ class Coverflow extends Component {
                 return (
 
                     <Aux key={index}>
+
                         <li
-
                             className={classes.Flipper}
-                            onClick={(e) => { this.test(e), this.getID(e, id) }}
                             style={{ 'zIndex': (50 - ((index + 2) * 1)) }}
-                            key={index}
-                            index={index}  >
+                        >
 
 
-                            <div className={classes.Front}>
+                            <div ref={`front${id}`} className={classes.Front} onClick={(e) => { this.getID(e, id) }}>
                                 <img className={classes.Image} src={image} alt="" />
                                 <p className={classes.Description}
                                     style={{ 'zIndex': 101 + (index * -1) }}>
                                     {this.props.ids[index].name}
                                 </p>
                             </div>
+                            
 
                             <Back>
-                                <button onClick={() => console.log('back')}>back</button>
+                                {id === this.state.clickedBackId ? this.props.tracklistProp : null}
                             </Back>
-
-
-
-
 
                         </li>
                     </Aux>
@@ -283,12 +293,16 @@ class Coverflow extends Component {
         }
 
         return (
-            <div className={classes.CoverflowContainer} >
 
-               {/*  <Modal show={true}>
+            <Aux>
+                {/*    <Modal show={this.state.clicked}>
                     {this.props.tracklistProp}
                 </Modal>
- */}
+  */}
+
+
+
+
 
                 <div className={classes.Coverflow} id="Coverflow">
                     <ul className={classes.Ul} id="items">
@@ -298,9 +312,7 @@ class Coverflow extends Component {
                     </ul>
                 </div>
 
-
-
-            </div>
+            </Aux>
         );
     }
 }

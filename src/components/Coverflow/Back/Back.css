@@ -1,20 +1,18 @@
-.Back {  
- z-index: 250 !important;
-   
- transform: rotateY(180deg);    
- font-size: 8px;
- justify-content: center;
- align-items: center;
- display: flex;
- /* border: 2px solid red;
- background-color: black; */
- display: flex;
- height: 22.5vw;
- width: 22.5vw;  
+.Back {
+  z-index: 250 !important;
+  font-size: 0.8vw;
+ background-color: #181818;
+  
+  justify-content: flex-start;
+  align-items: flex-start;
+  display: flex;
+  transform: rotateY(-180deg);
 
-    backface-visibility: hidden;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
+  height: 20vw;
+  width: 20vw;
 
+  backface-visibility: hidden;
+  position: relative;
+  top: 0;
+  left: 0;
+}

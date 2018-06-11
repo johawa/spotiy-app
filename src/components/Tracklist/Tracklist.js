@@ -26,9 +26,9 @@ class Tracklist extends Component {
 
         return (
             <div className={classes.Tracklist}>
-                <ul>
+                <ol className={classes.Ol}>
                     {tracklist}
-                </ul>
+                </ol>
             </div>
         );
     }

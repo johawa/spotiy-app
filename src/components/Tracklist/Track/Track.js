@@ -7,15 +7,15 @@ import * as actionTypes from '../../../Store/actions.js';
 
 class Track extends Component {
 
-    playsong = (nr) => {           
-        
+    playsong = (nr) => {
+
         const coverId = this.props.selectedCoverID
         const album = `spotify:album:${coverId}`
-        const offset = nr -1 
+        const offset = nr - 1
 
         axios.put("me/player/play?device_id=" + this.props.device_id, {
             context_uri: album,
-            offset: {position: offset}         
+            offset: { position: offset }
         }).then(data => console.log(data))
             .then(() => this.props.playing_to_true())
 
@@ -24,11 +24,11 @@ class Track extends Component {
 
     render() {
         return (
-            <div className={classes.TrackItem} onClick={() => this.playsong(this.props.nr)}>
-                {this.props.nr} ,
-                {this.props.name} ,
-                {this.props.duration}
-            </div>
+            <li className={classes.TrackItem} onClick={() => this.playsong(this.props.nr)}>
+                <span>&#9658;</span>
+                <span>{this.props.name} </span>
+                <span>{this.props.duration} </span>
+            </li>
         );
     }
 };

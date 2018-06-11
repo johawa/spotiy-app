@@ -19,6 +19,7 @@ class App extends Component {
  
   }
 
+
   componentWillMount() {
     console.log('mounted app component')
 

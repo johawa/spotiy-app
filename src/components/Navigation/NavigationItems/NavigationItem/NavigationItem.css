@@ -18,6 +18,8 @@
 .NavigationItem a:active,
 .NavigationItem a.active {
     color: #72D687;
+  
+
 }
 
 @media (min-width: 500px) {

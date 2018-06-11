@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import SuggestionBox from './SuggestionBox/Suggestion';
 import classes from './Search.css';
 import axios from '../../axios-query';
 import Aux from '../../hoc/Auxilary';
 import * as actionTypes from '../../Store/actions';
 import Spyglas from '../../assets/spyglass.png';
+import Suggestions from './SuggestionBox/Suggestion';
 
 class Search extends Component {
     state = {
         queryString: '',
+    }
+
+    componentDidMount() {
+        this._input.focus();
     }
 
     searchAlbums = (event) => {
@@ -64,17 +70,20 @@ class Search extends Component {
 
     render() {
         let form = (
-            <form className={classes.Search} onSubmit={this.searchAlbums}>               
-                <input className={classes.Input} type="text" placeholder="Suche nach einem Album" onChange={this.handleChange} />
+
+            <form className={classes.Search} onSubmit={this.searchAlbums}>
+                <input ref={(input) => this._input = input} className={classes.Input} type="text" placeholder="Suche nach einem Album" onChange={this.handleChange} />
                 <button className={classes.Button} type="submit">
-                    <img src={Spyglas}/>
+                    <img src={Spyglas} />
                 </button>
+                <Suggestions />
             </form>
+
         );
 
         return (
             <Aux>
-                {form}               
+                {form}
             </Aux>
         );
     }
